@@ -1,0 +1,60 @@
+	;; acme mixup.a
+	;; ./x16emu -prg mixup.o -run
+	!to "mixup.o",cbm
+	!cpu 65C02
+
+	* = $0801
+	!word $080A 	;; next line at $0810
+	!word $000A 	;; BASIC line 10
+	!byte $9E	;; token SYS
+	!hex 2430383130	;; $0810 -- start of assembly code
+	!fill $0810-*,0
+
+	CHROUT	= $FFD2
+	TECHO	= $9FB3
+	V1PB	= $9F60
+	V1PA	= $9F61
+!macro LOOKHERE {
+	!byte $FF
+}
+
+begin:
+	lda V1PB	;; read the ROM bank
+	tax
+	lda #0		;; set to bank 0 (BASIC)
+	sta V1PB
+	jsr HEXOUT	;; print X as hex
+	lda #$0D
+	jsr CHROUT
+	txa		;; restore ROM bank
+	sta V1PB
+	rts
+
+
+	JSFAR	= $FF6E
+	SWAPPER	= $FF5F
+swap:
+	jsr JSFAR
+	!word SWAPPER
+	!byte 0
+	rts
+
+!zone hexout {
+HEXOUT:	;; print X as two hex digits
+	txa
+	lsr
+	lsr
+	lsr
+	lsr
+	jsr .xx
+	txa
+	and #$0F
+.xx	clc
+	adc #$30
+	cmp #$3A
+	bcc +
+	adc #$06
++	jsr CHROUT
+	rts
+}
+
