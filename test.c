@@ -7,7 +7,7 @@
 #define WRONG_TOKEN 2
 
 #define TOKENSIZE 8
-int tokens[TOKENSIZE];
+char tokens[TOKENSIZE];
 int tptr = 0;
 int fail = NOT;
 
@@ -26,24 +26,29 @@ void showTokens() {
 	int x;
 	for (x = 0; x < TOKENSIZE; x++) {
 		if (tokens[x] < 1) break;
-		printf("token[%d]=%d\n", x, tokens[x]);
+		printf("token[%d]=%c\n", x, tokens[x]);
 	}
 }
 
-int evaluate(char *s, int expected[]) {
+int cases = 0;
+int failures = 0;
+
+int evaluate(char *s, char expected[]) {
 	int x;
+	cases++;
 	reset();
 	scan(s, tokens);
 	for (x = 0; x < TOKENSIZE; x++) {
 		if (tokens[x] == 0) break;
 		if (expected[x] != tokens[x]) {
 			printf("FAIL [%s]\n", s);
-			printf("FAIL expected=%d actual=%d\n", expected[x], tokens[x]);
+			printf("FAIL expected=%c actual=%c\n", expected[x], tokens[x]);
 			fail=WRONG_TOKEN;
 		}
 	}
 
 	if (fail != NOT) {
+		failures++;
 		showTokens();
 		return 1;
 	} else {
@@ -51,18 +56,20 @@ int evaluate(char *s, int expected[]) {
 	}
 }
 	
-#define TEST(fixture, expectation) cases++; failures += evaluate(fixture, expectation);
-
-int main() {
-	int cases = 0;
-	int failures = 0;
-
-	//TEST("xyz", (int[]){NUMBER})
-	TEST("555", (int[]){NUMBER})
-	TEST("100 * 3 / 4", ((int[]){NUMBER, OPERATOR, NUMBER, OPERATOR, NUMBER}))
-
+void report() 
+{
 	if (failures == 0) printf("GREEN ");
 	else printf("RED ");
 	printf("cases=%d failures=%d\n", cases, failures);
+}
+
+int main() {
+	evaluate("555", "NZ");
+
+	evaluate("100 * 3 / 4", "NONONZ");
+
+	report();
+	evaluate("xyz", "NZ");
+	report();
 	return failures;
 }

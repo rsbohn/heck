@@ -12,6 +12,9 @@ HECK.PRG: heck.c
 TD.PRG: tiledemo.c
 	$(CC) -o $@ $<
 
+TEST.PRG: test.c scan.c scan.h
+	$(CC) -o $@ test.c scan.c
+
 
 
 

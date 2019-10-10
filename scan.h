@@ -2,11 +2,13 @@
 // Copyright (c) Randall Bohn 2019
 // BSD 2 Clause License
 
-int *scan(char *s, int tokens[]);
+// use char * because cc65 can't do plaid\H\H\H\H\Hinteger arrays
+char *scan(char *s, char *tokens);
 
-#define NUMBER 80
-#define OPERATOR 81
-#define OTHER 82
+#define NUMBER 'N'
+#define OPERATOR 'O'
+#define OTHER '?'
+#define EOL 'Z'
 
 // operators
 #define O_NONE 0

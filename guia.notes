@@ -1,3 +1,19 @@
+Thu Oct 10 13:59:03 MDT 2019
+
+from math import gcd
+
+def rat(n):
+    deno=10000
+    a = int(n)
+    numer = int((n-a)*deno)
+    u = gcd(numer, deno)
+    return "%d +%d/%d" % (a, numer/u, deno/u)
+
+rat(2/3*(1+7/8)
+... '1+1/4'
+eval(rat(2/3*(1+7/8)))
+... 1.25
+
 Wed Oct  9 05:39:12 MDT 2019
 WebAssembly why not Bassembly?
 assemBAS? Def not.

@@ -16,7 +16,7 @@ int classify(char ch) {
 	return OTHER;
 }
 
-int *scan(char *s, int tokens[])
+char *scan(char *s, char *tokens)
 {
 	int n = 0;
 	int p = 0;
@@ -29,7 +29,6 @@ int *scan(char *s, int tokens[])
 		if (ch == ' ') continue;
 		if (ch == '\t') continue;
 		that = classify(ch);
-		//printf("(%d,%d) %c\n", current, that, ch);
 		if (current == 0) current = that;
 		if (that != current) {
 			tokens[p++] = current;
@@ -37,6 +36,7 @@ int *scan(char *s, int tokens[])
 		}
 	}
 	// set final token
-	tokens[p] = current;
+	tokens[p++] = current;
+	tokens[p] = EOL;
 	return tokens;
 }
