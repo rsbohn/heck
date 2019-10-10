@@ -9,6 +9,10 @@
 int classify(char ch) {
 	if (isdigit(ch)) return NUMBER;
 	if (ch == '+') return OPERATOR;
+	if (ch == '-') return OPERATOR;
+	if (ch == '*') return OPERATOR;
+	if (ch == '/') return OPERATOR;
+	if (ch == '%') return OPERATOR;
 	return OTHER;
 }
 
