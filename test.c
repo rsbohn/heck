@@ -61,5 +61,8 @@ int main() {
 	TEST("555", (int[]){NUMBER})
 	TEST("100 * 3 / 4", ((int[]){NUMBER, OPERATOR, NUMBER, OPERATOR, NUMBER}))
 
+	if (failures == 0) printf("GREEN ");
+	else printf("RED ");
 	printf("cases=%d failures=%d\n", cases, failures);
+	return failures;
 }
