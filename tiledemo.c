@@ -84,23 +84,23 @@ void tput(uint8_t x, uint8_t y, uint8_t n)
 
 void pfill()
 {
-	/* velocity-blue */
-	pset(0,1,2,4);
-	pset(1,1,2,5);
-	pset(2,2,3,7);
-	pset(3,1,4,8);
-	pset(4,1,5,9);
-	pset(5,1,6,10);
-	pset(6,2,7,10);
-	pset(7,2,8,10);
-	pset(8,3,9,10);
-	pset(9,4,10,10);
-	pset(10,6,11,11);
-	pset(11,8,12,11);
-	pset(12,10,12,12);
-	pset(13,12,13,13);
-	pset(14,14,14,13);
-	pset(15,15,15,14);
+	/* turbidity */
+	pset(0,2,1,1);
+	pset(1,3,2,2);
+	pset(2,4,3,2);
+	pset(3,5,3,3);
+	pset(4,6,4,3);
+	pset(5,7,5,3);
+	pset(6,8,5,3);
+	pset(7,9,6,3);
+	pset(8,10,7,3);
+	pset(9,11,8,4);
+	pset(10,11,9,4);
+	pset(11,12,10,5);
+	pset(12,12,11,6);
+	pset(13,13,12,7);
+	pset(14,13,14,9);
+	pset(15,14,15,10);
 }
 
 void pset(uint8_t slot, uint8_t r, uint8_t g, uint8_t b)

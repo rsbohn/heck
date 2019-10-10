@@ -1,0 +1,24 @@
+Wed Oct  9 05:39:12 MDT 2019
+WebAssembly why not Bassembly?
+assemBAS? Def not.
+
+Compile the language of your choice.
+REXX?
+to BASIC
+which has the required line numbers.
+which has R0-R7 for numbers.
+which has S0-S7 for strings.
+which has M(32) for numbers.
+Your function calls become subroutines.
+Register allocation is a thing.
+We can do this.
+
+Wed Oct  9 05:37:20 MDT 2019
+Starting the heck calculator.
+Reading is easy.
+What to do with the input gets complicated.
+Reader needs to send the last token when it reads an operator.
+
+1000*2
+
+for example. Send the 1000, then *, then 2.

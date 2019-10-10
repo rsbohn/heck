@@ -7,4 +7,4 @@ HECK.PRG: heck.c
 TD.PRG: tiledemo.c
 	$(CC) -o $@ $<
 clean:
-	-@rm dump*
+	-@rm dump* memory.bin
