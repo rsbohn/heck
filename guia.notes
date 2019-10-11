@@ -1,3 +1,27 @@
+Fri Oct 11 05:57:24 MDT 2019
+CX16 Software Screen Capture
+Render the current screen into memory (so you can save it to a file)
+
+You would start by reserving enough memory for the entire screen. 640*480=307200 bytes
+You then fill each pixel, starting with Layer0, then Layer1, then any sprites.
+Wow, that's too much memory. Guess it should be just an emulator feature, 
+probably easier that way anyway.
+
+Fri Oct 11 05:38:34 MDT 2019
+line discipline: 
+..cooked: The terminal driver will handle erase characters.
+..raw: The terminal driver sends all keystrokes.
+
+Seems like on C64 the line discipline allows editing any line on the screen.
+Pressing <RETURN> sends the current line to the interpreter.
+So strong that MON uses the same model. Whatever the current line contains is interpreted.
+<Shift-RETURN> allows CRLF without triggering the interpreter.
+Is it reasonable to allow multi-line evaluation?
+9term allows you to edit before the current eval point. You SEND text you want interpreted.
+What if you could SEND from anyplace on the screen? 
+  New output is added to the bottom of the screen.
+  Allow 
+
 Thu Oct 10 13:59:03 MDT 2019
 
 from math import gcd

@@ -3,8 +3,10 @@
 // BSD 2 Clause License
 
 // use char * because cc65 can't do plaid\H\H\H\H\Hinteger arrays
-char *scan(char *s, char *tokens);
+void scan(char *s);
+void accept(char token, char *text, int len);
 
+#define BLANK 'B'
 #define NUMBER 'N'
 #define OPERATOR 'O'
 #define OTHER '?'

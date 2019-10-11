@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "scan.h"
 
 // so many ways to fail
@@ -11,9 +12,30 @@ char tokens[TOKENSIZE];
 int tptr = 0;
 int fail = NOT;
 
-void accept(int token) {
-	tokens[tptr++] = token;
-	if (tptr >= TOKENSIZE) fail=TOO_MANY_TOKENS;
+char printable[20];
+void accept(char token, char *text, int len) {
+	int n = len;
+	if (n < 0) n = 0;
+	if (n > 19) n = 19;
+	if (token != BLANK) {
+		tokens[tptr++] = token;
+		if (tptr >= TOKENSIZE) fail=TOO_MANY_TOKENS;
+	}
+	if (token == EOL) {
+		printf("EOL\n");
+		return;
+	}
+	strncpy(printable, text, n);
+	printable[n]=0;
+	if (token == NUMBER) {
+		printf("=%s=\n", printable);
+	}
+	if (token == OPERATOR) {
+		printf("_%s_\n", printable);
+	}
+	if (token == OTHER) {
+		printf("<<%s>>\n", printable);
+	}
 }
 
 void reset() {
@@ -37,7 +59,7 @@ int evaluate(char *s, char expected[]) {
 	int x;
 	cases++;
 	reset();
-	scan(s, tokens);
+	scan(s);
 	for (x = 0; x < TOKENSIZE; x++) {
 		if (tokens[x] == 0) break;
 		if (expected[x] != tokens[x]) {
@@ -66,7 +88,7 @@ void report()
 int main() {
 	evaluate("555", "NZ");
 
-	evaluate("100 * 3 / 4", "NONONZ");
+	evaluate("100 * 3/4", "NONONZ");
 
 	report();
 	evaluate("xyz", "NZ");

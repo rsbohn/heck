@@ -8,6 +8,7 @@
 
 int classify(char ch) {
 	if (isdigit(ch)) return NUMBER;
+	if (isblank(ch)) return BLANK;
 	if (ch == '+') return OPERATOR;
 	if (ch == '-') return OPERATOR;
 	if (ch == '*') return OPERATOR;
@@ -16,7 +17,7 @@ int classify(char ch) {
 	return OTHER;
 }
 
-char *scan(char *s, char *tokens)
+void scan(char * s)
 {
 	int n = 0;
 	int p = 0;
@@ -26,17 +27,15 @@ char *scan(char *s, char *tokens)
 
 	while (*(s+n) > 0) {
 		ch = *(s+(n++));
-		if (ch == ' ') continue;
-		if (ch == '\t') continue;
 		that = classify(ch);
 		if (current == 0) current = that;
 		if (that != current) {
-			tokens[p++] = current;
+			accept(current, s+p, n-p-1);
 			current = that;
+			p = n-1;
 		}
 	}
 	// set final token
-	tokens[p++] = current;
-	tokens[p] = EOL;
-	return tokens;
+	accept(current, s+p, n-p);
+	accept(EOL, s+n, 0);;
 }
