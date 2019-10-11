@@ -26,14 +26,15 @@ void scan(char * s)
 	int that;
 
 	while (*(s+n) > 0) {
-		ch = *(s+(n++));
+		ch = *(s+n);
 		that = classify(ch);
 		if (current == 0) current = that;
 		if (that != current) {
-			accept(current, s+p, n-p-1);
+			accept(current, s+p, n-p);
 			current = that;
-			p = n-1;
+			p = n;
 		}
+		n++;
 	}
 	// set final token
 	accept(current, s+p, n-p);

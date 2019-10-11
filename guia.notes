@@ -20,7 +20,13 @@ Is it reasonable to allow multi-line evaluation?
 9term allows you to edit before the current eval point. You SEND text you want interpreted.
 What if you could SEND from anyplace on the screen? 
   New output is added to the bottom of the screen.
-  Allow 
+  Allow scrolling the input section of the screen (but not too much? multiple screens?)
+  Use a marker to delimit what gets interpreted so you can run multiple lines.
+
+If you're reading the input from the screen you can be cool about it.
+You can also make character attributes (color) significant.
+And you usually have 128 columns per line so at 40 wide you could do three screens easy.
+Maybe have to use a taller screen buffer for more 80 column screens.
 
 Thu Oct 10 13:59:03 MDT 2019
 
