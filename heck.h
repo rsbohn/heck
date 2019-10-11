@@ -1,9 +1,8 @@
 #define BUFFSIZE 32
 
-int readToken();
+int reader();
 void evaluate();
 void print();
-void accept(int token);
 int select(char op);
 
 // lex states

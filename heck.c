@@ -1,35 +1,43 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <conio.h>
+#include <string.h>
+
+#ifdef __CX16__
+	#include <conio.h>
+#endif
+
 #include <ctype.h>
 
 #include "heck.h"
+#include "scan.h"
 
 char buffer[BUFFSIZE];
 int dot = 0;
 int prevtoken = IDLE;
-int oper = O_NONE;
+int operator = O_NONE;
+
 #define STACKSIZE 8
 int stack[STACKSIZE];
-int sp = STACKSIZE-1;
+int sp = 0;
 
-char optable[] = "?+-*/%";
-
-void main()
+int main()
 {
 	int last;
 	do {
-		last = readToken();
+		last = reader();
 		if (last == RESOLVE) evaluate();
 	} while (last != GEOF);
+	return 0;
 }
 
 #define CTRLD 0x04
 #define CTRLH 0x08
-int readToken() 
+int reader() 
 {
 	char ch;
+	int x;
+
 	if (dot >= BUFFSIZE) return BFULL;
 	if (!kbhit()) return IDLE;
 	ch=cgetc();
@@ -43,34 +51,23 @@ int readToken()
 		return IDLE;
 	}
 	if (ch == '=') {
-		accept(prevtoken);
-		prevtoken = IDLE;
+		scan(buffer);
 		dot = 0;
+		buffer[dot]=0;
 		return RESOLVE;
 	}
 	if (ch==0x20 || ch==0x0D) {
-		accept(prevtoken);
-		prevtoken=IDLE;
+		scan(buffer);
 		dot = 0;
-		return IDLE;
+		buffer[dot]=0;
+		return RESOLVE;
 	}
-	if (isdigit(ch)) {
-		if (prevtoken != NUMBER) {
-			accept(prevtoken);
-			prevtoken = NUMBER;
-			dot = 0;
-		}
-	} else {
-		if (prevtoken == NUMBER) {
-			accept(prevtoken);
-			if (O_NONE==select(ch)) {
-				prevtoken = OTHER;
-			} else {
-				prevtoken = OPERATOR;
-			}
-			dot = 0;
+	if (ch == '.') {
+		for (x = sp-1; x >= 0; x--) {
+			printf("\nstack[%d]=%d\n", x, stack[x]);
 		}
 	}
+
 	buffer[dot] = ch;
 	if (dot+1 < BUFFSIZE) buffer[dot+1]=0;
 	dot++;
@@ -78,17 +75,23 @@ int readToken()
 	return IDLE;
 }
 
-void accept(int token) {
+char printable[33];
+void accept(char token, char *text, int len) {
+	int n = len > 0 ? len : 0;
+	n = len < 33 ? n : 32;
+	strncpy(printable, text, n);
+	printable[n]=0;
 	if (token == NUMBER) {
-		stack[sp--] = atoi(buffer);
+		if (sp >= STACKSIZE-1) {
+			printf("Stack is full!\n");
+		} else {
+			stack[sp++] = atoi(printable);
+		}
 	} else if (token == OPERATOR) {
-		oper = select(buffer[0]);
-	}
-	printf("\n%d:%s\n", token, buffer);
-}
+		operator = select(printable[0]);
+	}}
 
 int select(char ch) {
-	printf("\nselect:%c\n",ch);
 	if (ch=='+') return O_ADD;
 	if (ch=='-') return O_SUB;
 	if (ch=='*') return O_MUL;
@@ -98,10 +101,41 @@ int select(char ch) {
 }
 void evaluate()
 {
-	printf("\nop:%c\n", optable[oper]);
-	printf("A suffusion of yellow.\n");
-}
+	printf("\n");
+	if (sp < 1) {
+		printf("A suffusion of yellow.\n");
+		sp = 0;
+	} else if (sp == 1) {
+		printf("= %d\n", stack[0]);
+	} else {
+		switch (operator) {
+			case O_ADD:
+				sp--;
+				stack[sp-1] += stack[sp];
+				operator = O_NONE;
+				break;
+			case O_SUB:
+				sp--;
+				stack[sp-1] -= stack[sp];
+				operator = O_NONE;
+				break;
+			case O_MUL:
+				sp--;
+				stack[sp-1] *= stack[sp];
+				operator = O_NONE;
+				break;
+			case O_DIV:
+				sp--;
+				stack[sp-1] /= stack[sp];
+				operator = O_NONE;
+				break;
+			case O_MOD:
+				sp--;
+				stack[sp-1] %= stack[sp];
+				operator = O_NONE;
+				break;
+		}
+		printf("= %d OK\n", stack[sp-1]);
+	}
 
-void print() {
-	printf("\n%s\n:", buffer);
 }

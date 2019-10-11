@@ -6,8 +6,8 @@ XHOME=~/x16emu
 unit: test.c scan.h scan.c
 	cc -o $@ test.c scan.c
 
-HECK.PRG: heck.c
-	$(CC) -o $@ $<
+HECK.PRG: heck.c scan.c
+	$(CC) -o $@ heck.c scan.c
 
 TD.PRG: tiledemo.c
 	$(CC) -o $@ $<
