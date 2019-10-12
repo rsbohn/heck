@@ -5,6 +5,7 @@
 
 #ifdef __CX16__
 	#include <conio.h>
+	#include "graphics.h"
 #endif
 
 #include <ctype.h>
@@ -20,13 +21,23 @@ int operator = O_NONE;
 #define STACKSIZE 8
 int stack[STACKSIZE];
 int sp = 0;
+#define PROMPT "heck: "
 
 int main()
 {
 	int last;
+#ifdef __CX16__
+	big_pixels();
+	he_logo();
+#endif
+
+	printf(PROMPT);
 	do {
 		last = reader();
-		if (last == RESOLVE) evaluate();
+		if (last == RESOLVE) {
+			evaluate();
+			printf(PROMPT);
+		}
 	} while (last != GEOF);
 	return 0;
 }
