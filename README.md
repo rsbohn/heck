@@ -17,7 +17,7 @@ You will need a working x16emu.
 
 Use `$(X16EMU) -prg HECK.PRG -run` to start it.
 
-When you enter `2+2=' it will respond with `4`.
+When you enter `2+2=` it will respond with `4`.
 
 More help is available within the program.
 
