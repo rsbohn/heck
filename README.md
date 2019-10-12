@@ -23,4 +23,4 @@ More help is available within the program.
 
 DISCLAIMER:
 
-This is nothing to do with Ben Heckendorf. It's more of an "Oh heck I may as well get it started." project.
+This is nothing to do with Ben Heckendorn. It's more of an "Oh heck I may as well get it started." project.
