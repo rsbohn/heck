@@ -32,6 +32,6 @@ void he_logo()
 	printf("The Heck Calculator *PROTOTYPE*\n\n");
 	printf("  Enter an expression.\n");
 	printf("  * / %%, + - are available.\n");
-	printf("  16 bit integers only!\n");
+	printf("  32 bit long integers only!\n");
 	printf("  Press . to view the stack.\n\n");
 }
