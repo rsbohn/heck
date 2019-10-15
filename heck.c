@@ -19,7 +19,7 @@ int prevtoken = IDLE;
 int operator = O_NONE;
 
 #define STACKSIZE 8
-int stack[STACKSIZE];
+long stack[STACKSIZE];
 int sp = 0;
 #define PROMPT "heck: "
 
@@ -75,7 +75,7 @@ int reader()
 	}
 	if (ch == '.') {
 		for (x = sp-1; x >= 0; x--) {
-			printf("\nstack[%d]=%d\n", x, stack[x]);
+			printf("\nstack[%d]=%ld\n", x, stack[x]);
 		}
 	}
 
@@ -88,6 +88,7 @@ int reader()
 
 char printable[33];
 void accept(char token, char *text, int len) {
+	long v;
 	int n = len > 0 ? len : 0;
 	n = len < 33 ? n : 32;
 	strncpy(printable, text, n);
@@ -96,7 +97,8 @@ void accept(char token, char *text, int len) {
 		if (sp >= STACKSIZE-1) {
 			printf("Stack is full!\n");
 		} else {
-			stack[sp++] = atoi(printable);
+			v = atol(printable);
+			stack[sp++] = v;
 		}
 	} else if (token == OPERATOR) {
 		operator = select(printable[0]);
@@ -117,7 +119,7 @@ void evaluate()
 		printf("A suffusion of yellow.\n");
 		sp = 0;
 	} else if (sp == 1) {
-		printf("= %d\n", stack[0]);
+		printf("= %ld\n", stack[0]);
 	} else {
 		switch (operator) {
 			case O_ADD:
@@ -146,7 +148,7 @@ void evaluate()
 				operator = O_NONE;
 				break;
 		}
-		printf("= %d OK\n", stack[sp-1]);
+		printf("= %ld OK\n", stack[sp-1]);
 	}
 
 }
