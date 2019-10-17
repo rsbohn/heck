@@ -5,7 +5,7 @@ CC=cl65 -t cx16
 unit: test.c scan.h scan.c
 	cc -o $@ test.c scan.c
 
-OBJLIST=scan.o graphics.o
+OBJLIST=scan.o graphics.o dict.o
 HECK.PRG: heck.c $(OBJLIST)
 	$(CC) -o $@ $< $(OBJLIST)
 

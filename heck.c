@@ -12,6 +12,7 @@
 
 #include "heck.h"
 #include "scan.h"
+#include "dict.h" /* the function dictionary */
 
 char buffer[BUFFSIZE];
 int dot = 0;
@@ -22,6 +23,13 @@ int operator = O_NONE;
 long stack[STACKSIZE];
 int sp = 0;
 #define PROMPT "heck: "
+
+void dup()
+{
+	if (sp < 1) return;
+	stack[sp]=stack[sp-1];
+	sp++;
+}
 
 int main()
 {
@@ -86,6 +94,10 @@ int reader()
 	return IDLE;
 }
 
+void ok() {
+	printf(" k\n");
+}
+
 char printable[33];
 void accept(char token, char *text, int len) {
 	long v;
@@ -93,7 +105,15 @@ void accept(char token, char *text, int len) {
 	n = len < 33 ? n : 32;
 	strncpy(printable, text, n);
 	printable[n]=0;
-	if (token == NUMBER) {
+	if (token == OTHER) {
+		int n = locate(printable);
+		if (n > 0) {
+			xt_call(n);
+			ok();
+		} else {
+			printf("?\n");
+		}
+	} else if (token == NUMBER) {
 		if (sp >= STACKSIZE-1) {
 			printf("Stack is full!\n");
 		} else {
@@ -102,7 +122,8 @@ void accept(char token, char *text, int len) {
 		}
 	} else if (token == OPERATOR) {
 		operator = select(printable[0]);
-	}}
+	}
+}
 
 int select(char ch) {
 	if (ch=='+') return O_ADD;
