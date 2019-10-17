@@ -1,7 +1,6 @@
 #define BUFFSIZE 32
 
 int reader();
-void evaluate();
 void print();
 int select(char op);
 
