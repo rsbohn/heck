@@ -107,6 +107,29 @@ void bsout()
 {
 	cbm_k_bsout((char)pop());
 }
+NAMED(_and, "and");
+void and_()
+{
+	int a = pop();
+	TOS = TOS & a;
+}
+NAMED(_or, "or");
+void or_()
+{
+	int a = pop();
+	TOS = TOS | a;
+}
+NAMED(_xor, "xor");
+void xor_()
+{
+	int a = pop();
+	TOS = TOS ^ a;
+}
+NAMED(_invert, "invert");
+void invert()
+{
+	TOS = ~(TOS);
+}
 
 /***************/
 typedef struct
@@ -129,6 +152,10 @@ const entry dictionary[] =
 ,	{_hook, hook}
 ,	{_emit, emit}
 ,	{_bsout, bsout}
+,	{_and, and_}
+,	{_or, or_}
+,	{_xor, xor_}
+,	{_invert, invert}
 };
 int entries = sizeof dictionary / sizeof dictionary[0];
 
