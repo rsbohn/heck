@@ -1,4 +1,4 @@
-#define BUFFSIZE 32
+#define BUFFSIZE 48
 
 int reader();
 void print();

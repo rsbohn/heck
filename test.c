@@ -13,7 +13,7 @@ int tptr = 0;
 int fail = NOT;
 
 char printable[20];
-void accept(char token, char *text, int len) {
+parser_state_t accept(char token, char *text, int len) {
 	int n = len;
 	if (n < 0) n = 0;
 	if (n > 19) n = 19;
@@ -23,7 +23,7 @@ void accept(char token, char *text, int len) {
 	}
 	if (token == EOL) {
 		printf("EOL\n");
-		return;
+		return PARSE_OK;
 	}
 	strncpy(printable, text, n);
 	printable[n]=0;
@@ -36,6 +36,7 @@ void accept(char token, char *text, int len) {
 	if (token == OTHER) {
 		printf("<<%s>>\n", printable);
 	}
+	return PARSE_OK;
 }
 
 void reset() {

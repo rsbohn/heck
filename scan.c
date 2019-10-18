@@ -21,16 +21,17 @@ void scan(char * s)
 {
 	int n = 0;
 	int p = 0;
+	parser_state_t pstate = PARSE_OK;
 	char ch;
 	int current = 0;
 	int that;
 
-	while (*(s+n) > 0) {
+	while (*(s+n) > 0 && pstate == PARSE_OK) {
 		ch = *(s+n);
 		that = classify(ch);
 		if (current == 0) current = that;
 		if (that != current) {
-			accept(current, s+p, n-p);
+			pstate = accept(current, s+p, n-p);
 			current = that;
 			p = n;
 		}

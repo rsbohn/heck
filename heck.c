@@ -86,7 +86,7 @@ int reader()
 }
 
 char printable[33];
-void accept(char token, char *text, int len) {
+parser_state_t accept(char token, char *text, int len) {
 	int n = len > 0 ? len : 0;
 	n = len < 33 ? n : 32;
 	strncpy(printable, text, n);
@@ -97,12 +97,14 @@ void accept(char token, char *text, int len) {
 			xt_call(n);
 		} else {
 			printf("?\n");
+			return PARSE_BOGUS;
 		}
 	} else if (token == NUMBER) {
 		push(atol(printable));
 	} else if (token == OPERATOR) {
 		operator = select(printable[0]);
 	}
+	return PARSE_OK;
 }
 
 int select(char ch) {

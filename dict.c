@@ -135,8 +135,7 @@ int entries = sizeof dictionary / sizeof dictionary[0];
 void words() 
 {
 	int i;
-	gotox(0);
-	cputs("\n");
+	cbm_k_bsout(0x0D);
 	for (i = entries; i > 0; i--) {
 		cputs(dictionary[i].name);
 		cputs(" ");
