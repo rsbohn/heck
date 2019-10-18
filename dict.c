@@ -66,7 +66,7 @@ void fdot()
 	cputs(s);
 	cputc(' ');
 }
-NAMED(_dots, "stack");
+NAMED(_dots, ".s");
 void fdots()
 {
 	int i;
@@ -102,6 +102,11 @@ void emit()
 {
 	cputc((char)pop());
 }
+NAMED(_bsout, "bsout");
+void bsout()
+{
+	cbm_k_bsout((char)pop());
+}
 
 /***************/
 typedef struct
@@ -123,6 +128,7 @@ const entry dictionary[] =
 ,	{_store, store}
 ,	{_hook, hook}
 ,	{_emit, emit}
+,	{_bsout, bsout}
 };
 int entries = sizeof dictionary / sizeof dictionary[0];
 

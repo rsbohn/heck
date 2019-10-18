@@ -14,6 +14,8 @@
 #include "scan.h"
 #include "dict.h" /* the function dictionary */
 
+void ok();
+
 char buffer[BUFFSIZE];
 int dot = 0;
 int prevtoken = IDLE;
@@ -34,15 +36,21 @@ int main()
 		last = reader();
 		if (last == RESOLVE) {
 			operator = evaluate(operator);
-			printf("\n= %ld\n", top());
+			ok();
+			printf("= %ld\n", top());
 			printf(PROMPT);
 		}
 	} while (last != GEOF);
 	return 0;
 }
 
+void ok() {
+	cbm_k_bsout(0xBB);
+	cbm_k_bsout(0x0D);
+}
+
 #define CTRLD 0x04
-#define CTRLH 0x08
+#define CTRLH 0x14 /* ??? */
 int reader() 
 {
 	char ch;
@@ -53,18 +61,17 @@ int reader()
 		return GEOF;
 	}
 	if (ch==CTRLH) {
-		dot--;
+		dot-=1;
 		if (dot < 0) dot = 0;
+		else {
+			cbm_k_bsout(CH_CURS_LEFT);
+			cbm_k_bsout(' ');
+			cbm_k_bsout(CH_CURS_LEFT);
+		}
 		buffer[dot]=0;
 		return IDLE;
 	}
-	if (ch == '=') {
-		scan(buffer);
-		dot = 0;
-		buffer[dot]=0;
-		return RESOLVE;
-	}
-	if (ch==0x20 || ch==0x0D) {
+	if (ch=='=' || ch==0x0D) {
 		scan(buffer);
 		dot = 0;
 		buffer[dot]=0;
@@ -78,10 +85,6 @@ int reader()
 	return IDLE;
 }
 
-void ok() {
-	printf(" k\n");
-}
-
 char printable[33];
 void accept(char token, char *text, int len) {
 	int n = len > 0 ? len : 0;
@@ -92,7 +95,6 @@ void accept(char token, char *text, int len) {
 		int n = locate(printable);
 		if (n > 0) {
 			xt_call(n);
-			ok();
 		} else {
 			printf("?\n");
 		}
