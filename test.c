@@ -91,9 +91,11 @@ void report()
 int main() {
 	evaluate("555", "NZ");
 
-	evaluate("100 * 3/4", "NONONZ");
+        evaluate("100 * 3/4", "NONONZ");
 
-	report();
+        evaluate("12 % 5", "NONZ");
+
+        report();
         evaluate("xyz", "NZ");
         report();
 
