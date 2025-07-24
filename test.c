@@ -17,10 +17,13 @@ void accept(char token, char *text, int len) {
 	int n = len;
 	if (n < 0) n = 0;
 	if (n > 19) n = 19;
-	if (token != BLANK) {
-		tokens[tptr++] = token;
-		if (tptr >= TOKENSIZE) fail=TOO_MANY_TOKENS;
-	}
+        if (token != BLANK) {
+                if (tptr >= TOKENSIZE) {
+                        fail = TOO_MANY_TOKENS;
+                } else {
+                        tokens[tptr++] = token;
+                }
+        }
 	if (token == EOL) {
 		printf("EOL\n");
 		return;
@@ -91,7 +94,11 @@ int main() {
 	evaluate("100 * 3/4", "NONONZ");
 
 	report();
-	evaluate("xyz", "NZ");
-	report();
-	return failures;
+        evaluate("xyz", "NZ");
+        report();
+
+        // Overflow test: too many tokens should set failure
+        evaluate("1 2 3 4 5 6 7 8 9", "");
+        report();
+        return failures;
 }
