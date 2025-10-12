@@ -1,22 +1,15 @@
-ALL: unit TEST.PRG HECK.PRG
+CC ?= gcc
+CFLAGS ?= -std=c11 -Wall -Wextra -pedantic -Wno-unused-parameter
 
-CC=cl65 -t cx16
+.PHONY: all clean
 
-unit: test.c scan.h scan.c
-	cc -o $@ test.c scan.c
+all: hal9000
 
-OBJLIST=scan.o graphics.o
-HECK.PRG: heck.c $(OBJLIST)
-	$(CC) -o $@ $< $(OBJLIST)
+hal9000: heck.c heck.h
+	$(CC) $(CFLAGS) -o $@ heck.c
 
-TD.PRG: tiledemo.c
-	$(CC) -o $@ $<
-
-TEST.PRG: test.c scan.c scan.h
-	$(CC) -o $@ test.c scan.c
-
-
-
+unit: test.c scan.c scan.h
+	$(CC) $(CFLAGS) -o $@ test.c scan.c
 
 clean:
-	-@rm dump* memory.bin
+	rm -f hal9000 unit
