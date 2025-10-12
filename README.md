@@ -10,6 +10,11 @@ Language: C (core) + Python 3.10+ (simulation/UI)
 
 A historically accurate PDP-8 minicomputer emulator running the RTS-8 real-time operating system to control a simulated waffle production factory. The system demonstrates industrial process control techniques from the 1960s-70s applied to modern simulation and visualization.
 
+## Hardware Targets
+
+- **Host Simulator** – default development configuration running on the local workstation.
+- **Adafruit Fruit Jam (RP2350)** – dual-core RP2350 microcontroller platform. The board definition reserves a 4K-word PDP-8 memory map and assumes a 200 MHz system clock with 60 Hz timing ticks for factory automation workloads.
+
 ## Factory Features
 
 - Batter preparation system
