@@ -10,6 +10,14 @@ Language: C (core) + Python 3.10+ (simulation/UI)
 
 A historically accurate PDP-8 minicomputer emulator running the RTS-8 real-time operating system to control a simulated waffle production factory. The system demonstrates industrial process control techniques from the 1960s-70s applied to modern simulation and visualization.
 
+## Factory Features
+
+- Batter preparation system
+- 16 automated waffle irons
+- Cooling conveyor
+- Automated packaging
+- Cold storage warehouse
+
 ## Non-Goals
 
 - Not cycle-exact at the gate level (we approximate timing)
