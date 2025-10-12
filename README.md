@@ -1,26 +1,25 @@
-The Heck Calculator
-===================
+# PDP-8 Waffle Factory
 
-This is a simple calculator for the Commander X16 computer.
+Technical Specification v1.0
+Target Platform: Linux (x86_64/ARM64)
+Future Target: Adafruit Fruit Jam (RP2350)
+License: MIT
+Language: C (core) + Python 3.10+ (simulation/UI)
 
-Build Instructions
-------------------
+## Project Overview
 
-You will need to have cc65 installed.
+A historically accurate PDP-8 minicomputer emulator running the RTS-8 real-time operating system to control a simulated waffle production factory. The system demonstrates industrial process control techniques from the 1960s-70s applied to modern simulation and visualization.
 
-Use `make HECK.PRG` to build.
+## Non-Goals
 
-Run Instructions
-----------------
+- Not cycle-exact at the gate level (we approximate timing)
+- Not supporting all PDP-8 peripherals (only those needed for factory control)
+- Not a general-purpose PDP-8 emulator (specialized for RTS-8 + factory control)
 
-You will need a working x16emu.
+## RTS-8 Features Used
 
-Use `$(X16EMU) -prg HECK.PRG -run` to start it.
-
-When you enter `2+2=` it will respond with `4`.
-
-More help is available within the program.
-
-DISCLAIMER:
-
-This is nothing to do with Ben Heckendorn. It's more of an "Oh heck I may as well get it started." project.
+- Interrupt-driven I/O: All device handlers use interrupts
+- Priority scheduling: Higher priority for time-critical tasks
+- Foreground/background: Fast control loops vs. housekeeping
+- Device handlers: One handler per device code
+- Timer services: 60Hz system clock
